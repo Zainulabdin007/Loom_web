@@ -1,0 +1,77 @@
+.app {
+  position: relative;
+}
+
+.toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 72px;
+  padding: 0 16.75%;
+  box-sizing: border-box;
+  background: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  pointer-events: none;
+}
+
+.toolbar-brand,
+.toolbar-nav,
+.toolbar-download {
+  pointer-events: auto;
+}
+
+.toolbar-brand {
+  font-family: 'Just Another Hand', cursive;
+  font-size: 44px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: #1a1a1a;
+}
+
+.toolbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.toolbar-nav a {
+  font-family: 'Uchen', serif;
+  font-size: 24px;
+  color: #1a1a1a;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.toolbar-nav a:hover {
+  opacity: 0.65;
+}
+
+.toolbar-download {
+  font-family: 'Uchen', serif;
+  font-size: 22px;
+  color: #f2f1ed;
+  background: #1a1a1a;
+  border: none;
+  border-radius: 999px;
+  padding: 6px 20px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.toolbar-download:hover {
+  opacity: 0.85;
+}
+
+.cicada-page .header {
+  visibility: hidden;
+  pointer-events: none;
+}
