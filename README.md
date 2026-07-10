@@ -1,16 +1,50 @@
-# React + Vite
+# Frame
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Landing page for **Frame**, a local-first AI coding IDE that personalizes itself to how you write code. Nothing leaves your machine.
 
-Currently, two official plugins are available:
+Built with React, Vite, GSAP (scroll-driven hero animation), and Sass.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features on this site
 
-## React Compiler
+- Scroll-driven Cicada-style hero with tree and circle animations
+- Product sections: about, how it works, features, privacy, download tiers
+- Sunset cloud ending with vignette lighting
+- Toolbar that switches to a dark theme over the black content sections
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Setup
 
-## Expanding the Oxlint configuration
+```bash
+npm install
+npm run dev
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Open the local URL Vite prints (usually `http://localhost:5173`).
+
+## Scripts
+
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Start the development server |
+| `npm run build` | Build for production into `dist/` |
+| `npm run preview` | Preview the production build locally |
+| `npm run lint` | Run Oxlint |
+
+## Project structure
+
+```
+src/
+  App.jsx                 # Toolbar + page shell
+  App.css                 # Toolbar styles
+  HomePage.jsx            # Loads the Cicada markup and GSAP init
+  cicada/
+    cicadaMarkup.html     # Hero + Frame content markup
+    initCicadaAnimations.js
+    style.sass
+public/
+  clouds.png              # Ending-section background
+```
+
+## Notes
+
+- The hero animation is scroll-scrubbed. Sections below the hero use fade-up and ring motifs as you scroll.
+- Nav links (`about`, `demo`, `product`, `download`) jump to matching section IDs with smooth scrolling.
