@@ -12,6 +12,22 @@ html
   --color-bashful-pancy: #D8CEE6
   --color-sugar-crystal: #F9F5FF
   --color-white: #ffffff
+  // dope.security — midnight terminal tokens
+  --color-near-black: #090909
+  --color-almost-white: #f7f9fa
+  --color-soft-white: #f0f0f0
+  --color-steel: #828384
+  --color-graphite: #474747
+  --color-iron: #423738
+  --color-ash: #6b6b6b
+  --color-signal-violet: #af50ff
+  --color-lavender-mist: #e1bdff
+  --color-sunset-orange: #e8874a
+  --color-sunset-ember: #c96a32
+  --font-sans: 'Inter', 'General Sans', ui-sans-serif, system-ui, sans-serif
+  --font-mono: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, monospace
+  --font-display: 'Lora', 'Tiempos Headline', Georgia, serif
+  --nav-bg-color: rgba(51, 50, 72, 0.7)
 
 *
     box-sizing: border-box
@@ -20,6 +36,9 @@ html, body
     width: 100%
     background: var(--color-fat-tuesday)
     margin: 0
+
+html
+    scroll-behavior: smooth
 
 body,
 main
@@ -63,7 +82,7 @@ body
 main
     position: relative
     width: 100%
-    height: 10000px
+    height: 5000px
     flex: 1 0 auto
 
 .header
@@ -296,35 +315,25 @@ button[type='submit']
   &-subtitle
     position: absolute
     top: 2.8rem
-    font-size: 1rem
+    font-size: 0.65rem
     line-height: 1.1
-    letter-spacing: -0.07rem
+    letter-spacing: -0.045rem
     text-align: center
     opacity: 0
     z-index: 1
   &-text
     position: absolute
     top: 1.89rem
-    max-width: 9.5rem
-    font-size: 0.58rem
-    line-height: 1.1
+    max-width: 12.5rem
+    font-size: 0.55rem
+    line-height: 1.15
     letter-spacing: -0.04rem
+    text-align: center
+    text-wrap: balance
     opacity: 0
     z-index: 1
-    span
-      position: relative
-      display: inline-block
-      font-family: 'Just Another Hand', cursive
-      font-size: 1.15em
-      letter-spacing: 0.04em
-      &::before
-        content: ""
-        position: absolute
-        bottom: -0.04rem
-        left: 0
-        width: 100%
-        border-bottom: 4px solid currentColor
-        transform: rotate(-3deg)
+    .nowrap
+      white-space: nowrap
   &-tree
     position: absolute
     bottom: 0
@@ -565,5 +574,585 @@ button[type='submit']
     background: var(--color-fat-tuesday)
     &:nth-child(odd)
       height: 0.15rem
-    
-  
+
+.frame
+  position: relative
+  z-index: 20
+  width: 100%
+  background: var(--color-near-black)
+  color: var(--color-almost-white)
+  font-family: var(--font-sans)
+  overflow: hidden
+  &-section
+    position: relative
+    width: 100%
+    padding: 1.2rem 0.8rem
+    overflow: hidden
+    scroll-margin-top: 72px
+    & + &
+      border-top: 1px solid rgba(247, 249, 250, 0.1)
+  &-inner
+    position: relative
+    width: 100%
+    max-width: 13rem
+    margin: 0 auto
+    z-index: 2
+  &-eyebrow
+    display: flex
+    align-items: center
+    gap: 0.16rem
+    font-family: var(--font-mono)
+    font-size: 0.14rem
+    font-weight: 400
+    letter-spacing: 0.05rem
+    text-transform: uppercase
+    color: var(--color-soft-white)
+    opacity: 0.75
+    margin: 0 0 0.3rem
+  &-ping
+    position: relative
+    display: inline-block
+    flex: 0 0 auto
+    width: 0.1rem
+    height: 0.1rem
+    border-radius: 50%
+    background: var(--color-signal-violet)
+    &::before,
+    &::after
+      content: ''
+      position: absolute
+      inset: 0
+      border-radius: 50%
+      border: 1px solid var(--color-signal-violet)
+      animation: frameEcho 2.8s ease-out infinite
+    &::after
+      animation-delay: 1.4s
+  &-h1
+    font-size: 0.88rem
+    line-height: 1.0
+    letter-spacing: -0.03rem
+    font-weight: 300
+    color: var(--color-almost-white)
+    margin: 0 0 0.34rem
+    span
+      font-family: var(--font-display)
+      font-style: italic
+      font-weight: 400
+      font-size: 1.05em
+      letter-spacing: -0.01em
+      color: var(--color-lavender-mist)
+  &-h2
+    font-size: 0.56rem
+    line-height: 1.04
+    letter-spacing: -0.02rem
+    font-weight: 300
+    color: var(--color-almost-white)
+    margin: 0 0 0.3rem
+  &-lead
+    font-size: 0.22rem
+    line-height: 1.5
+    font-weight: 300
+    max-width: 8rem
+    margin: 0 0 0.5rem
+    color: var(--color-almost-white)
+    opacity: 0.7
+    em
+      font-family: var(--font-display)
+      font-style: italic
+      color: var(--color-lavender-mist)
+      opacity: 1
+  &-video
+    position: relative
+    width: 100%
+    aspect-ratio: 16 / 9
+    margin: 0.6rem 0 0
+    border-radius: 0.192rem
+    border: 1px dashed rgba(247, 249, 250, 0.25)
+    background: rgba(66, 55, 56, 0.25)
+    display: flex
+    align-items: center
+    justify-content: center
+    &__label
+      font-family: var(--font-mono)
+      font-size: 0.16rem
+      letter-spacing: 0.02rem
+      text-transform: uppercase
+      color: var(--color-steel)
+    &--orange
+      border-color: rgba(232, 135, 74, 0.65)
+  &-compare
+    display: grid
+    grid-template-columns: 1fr 1fr
+    gap: 0.4rem
+    margin-top: 0.6rem
+    &__col
+      padding: 0.5rem 0.5rem
+      border-radius: 0.192rem
+      border: 1px solid rgba(247, 249, 250, 0.14)
+      background: transparent
+      h3
+        font-family: var(--font-mono)
+        font-size: 0.2rem
+        font-weight: 400
+        letter-spacing: 0.03rem
+        text-transform: uppercase
+        color: var(--color-soft-white)
+        margin: 0 0 0.3rem
+      ul
+        list-style: none
+        margin: 0
+        padding: 0
+      li
+        position: relative
+        font-size: 0.19rem
+        font-weight: 300
+        line-height: 1.4
+        padding: 0.14rem 0 0.14rem 0.34rem
+        color: var(--color-almost-white)
+        opacity: 0.8
+        border-top: 1px solid rgba(247, 249, 250, 0.1)
+        &::before
+          content: ''
+          position: absolute
+          left: 0
+          top: 0.24rem
+          width: 0.12rem
+          height: 0.12rem
+          border-radius: 50%
+          border: 1px solid currentColor
+      &--frame
+        border-color: rgba(175, 80, 255, 0.4)
+        background: radial-gradient(120% 120% at 100% 0%, rgba(175, 80, 255, 0.12), transparent 60%)
+        li
+          opacity: 0.95
+        li::before
+          border-color: var(--color-signal-violet)
+      &--orange
+        border-color: rgba(232, 135, 74, 0.55)
+  &-steps
+    display: grid
+    grid-template-columns: repeat(4, 1fr)
+    gap: 0.34rem
+    margin: 0.6rem 0
+  &-step
+    padding: 0.44rem 0.36rem
+    border-radius: 0.192rem
+    background: transparent
+    border: 1px solid rgba(247, 249, 250, 0.12)
+    &__num
+      display: flex
+      align-items: center
+      justify-content: center
+      width: 0.78rem
+      height: 0.78rem
+      border-radius: 50%
+      box-shadow: 0 0 0 1px var(--color-graphite)
+      font-family: var(--font-mono)
+      font-size: 0.26rem
+      font-weight: 400
+      letter-spacing: 0.02rem
+      color: var(--color-steel)
+      margin-bottom: 0.26rem
+    h3
+      font-size: 0.24rem
+      font-weight: 400
+      color: var(--color-almost-white)
+      margin: 0 0 0.14rem
+    p
+      font-size: 0.18rem
+      font-weight: 300
+      line-height: 1.45
+      color: var(--color-almost-white)
+      opacity: 0.65
+      margin: 0
+    &--orange
+      border-color: rgba(232, 135, 74, 0.55)
+      .frame-step__num
+        box-shadow: 0 0 0 1px rgba(232, 135, 74, 0.7)
+    &--violet
+      border-color: rgba(175, 80, 255, 0.5)
+      .frame-step__num
+        box-shadow: 0 0 0 1px rgba(175, 80, 255, 0.65)
+  &-grid
+    display: grid
+    grid-template-columns: repeat(3, 1fr)
+    gap: 0.34rem
+    margin-top: 0.6rem
+  &-card
+    padding: 0.5rem 0.44rem
+    border-radius: 0.192rem
+    background: transparent
+    border: 1px solid rgba(247, 249, 250, 0.12)
+    transition: border-color 0.3s ease, background 0.3s ease
+    &:hover
+      border-color: rgba(175, 80, 255, 0.45)
+      background: radial-gradient(120% 120% at 0% 0%, rgba(175, 80, 255, 0.1), transparent 65%)
+    &--orange
+      border-color: rgba(232, 135, 74, 0.55)
+      &:hover
+        border-color: rgba(232, 135, 74, 0.8)
+        background: radial-gradient(120% 120% at 0% 0%, rgba(232, 135, 74, 0.12), transparent 65%)
+    &--violet
+      border-color: rgba(175, 80, 255, 0.5)
+      &:hover
+        border-color: rgba(175, 80, 255, 0.75)
+        background: radial-gradient(120% 120% at 0% 0%, rgba(175, 80, 255, 0.12), transparent 65%)
+    h3
+      font-size: 0.26rem
+      font-weight: 400
+      color: var(--color-almost-white)
+      margin: 0 0 0.16rem
+    p
+      font-size: 0.19rem
+      font-weight: 300
+      line-height: 1.45
+      color: var(--color-almost-white)
+      opacity: 0.65
+      margin: 0
+  &-privacy
+    background: radial-gradient(120% 80% at 85% 0%, rgba(175, 80, 255, 0.16), transparent 55%), var(--color-near-black)
+    &__list
+      list-style: none
+      margin: 0.4rem 0 0
+      padding: 0
+      display: grid
+      grid-template-columns: repeat(2, 1fr)
+      gap: 0.24rem
+      max-width: 8.5rem
+      li
+        position: relative
+        font-size: 0.24rem
+        font-weight: 300
+        line-height: 1.35
+        color: var(--color-almost-white)
+        padding-left: 0.46rem
+        &::before
+          content: ''
+          position: absolute
+          left: 0
+          top: 0.02rem
+          width: 0.24rem
+          height: 0.24rem
+          border-radius: 50%
+          border: 1px solid var(--color-signal-violet)
+          box-shadow: 0 0 0.16rem rgba(175, 80, 255, 0.5)
+        &::after
+          content: ''
+          position: absolute
+          left: 0
+          top: 0.02rem
+          width: 0.24rem
+          height: 0.24rem
+          border-radius: 50%
+          border: 1px solid var(--color-signal-violet)
+          opacity: 0
+          pointer-events: none
+        &.is-live::after
+          animation: frameEcho 3.2s ease-out infinite
+  &-tiers
+    display: grid
+    grid-template-columns: repeat(3, 1fr)
+    gap: 0.36rem
+    margin-top: 0.7rem
+  &-tier
+    position: relative
+    display: flex
+    flex-direction: column
+    padding: 0.6rem 0.5rem
+    border-radius: 0.192rem
+    background: transparent
+    border: 1px solid rgba(247, 249, 250, 0.16)
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease
+    // Highlight follows the cursor: only the hovered tier lights up.
+    &:hover
+      border-color: transparent
+      background: var(--color-signal-violet)
+      color: var(--color-near-black)
+      box-shadow: 0 0 1.2rem rgba(175, 80, 255, 0.35)
+    &--featured
+      border-color: rgba(175, 80, 255, 0.45)
+    &__badge
+      position: absolute
+      top: -0.13rem
+      left: 0.5rem
+      font-family: var(--font-mono)
+      font-size: 0.12rem
+      font-weight: 400
+      letter-spacing: 0.03rem
+      text-transform: uppercase
+      padding: 0.06rem 0.18rem
+      border-radius: 1584px
+      color: var(--color-almost-white)
+      background: var(--color-near-black)
+    &__name
+      font-size: 0.44rem
+      font-weight: 300
+      margin: 0 0 0.06rem
+    &__q
+      font-family: var(--font-mono)
+      font-size: 0.15rem
+      letter-spacing: 0.02rem
+      text-transform: uppercase
+      opacity: 0.6
+      margin: 0 0 0.34rem
+    &__specs
+      list-style: none
+      margin: 0 0 0.44rem
+      padding: 0
+      flex: 1 0 auto
+      li
+        display: flex
+        align-items: baseline
+        justify-content: space-between
+        font-size: 0.19rem
+        font-weight: 300
+        padding: 0.16rem 0
+        border-top: 1px solid rgba(247, 249, 250, 0.14)
+        span
+          opacity: 0.55
+        strong
+          font-weight: 500
+    &:hover &__specs li
+      border-top-color: rgba(9, 9, 9, 0.2)
+  &-dl
+    position: relative
+    overflow: hidden
+    font-family: var(--font-sans)
+    font-size: 0.18rem
+    font-weight: 400
+    text-align: center
+    color: var(--color-almost-white)
+    background: var(--color-near-black)
+    border: 1px solid var(--color-almost-white)
+    border-radius: 0.08rem
+    padding: 0.18rem 0.3rem
+    cursor: pointer
+    text-decoration: none
+    display: inline-block
+    transition: opacity 0.2s ease, background 0.2s ease, color 0.2s ease
+    &::after
+      content: ''
+      position: absolute
+      top: 50%
+      left: 50%
+      width: 0.2rem
+      height: 0.2rem
+      border-radius: 50%
+      border: 1px solid currentColor
+      transform: translate(-50%, -50%) scale(0)
+      opacity: 0
+      pointer-events: none
+    &:hover
+      opacity: 0.82
+      &::after
+        animation: frameTap 0.6s ease-out
+    &--solid
+      color: var(--color-near-black)
+      background: var(--color-almost-white)
+      border-color: var(--color-almost-white)
+  // Edge arcs — the tree-circle ring, sliced by the viewport edge.
+  // Sections have overflow hidden, so half of each ring is clipped
+  // into a semicircle peeking in from the side.
+  &-arc
+    position: absolute
+    display: block
+    aspect-ratio: 1/1
+    border-radius: 50%
+    box-shadow: 0 0 0 1px rgba(247, 249, 250, 0.14)
+    pointer-events: none
+    z-index: 1
+    &--thick
+      box-shadow: 0 0 0 3px rgba(247, 249, 250, 0.1)
+    &--violet
+      box-shadow: 0 0 0 1px rgba(175, 80, 255, 0.38)
+    &--thick.frame-arc--violet
+      box-shadow: 0 0 0 3px rgba(175, 80, 255, 0.28)
+    &--plum
+      box-shadow: 0 0 0 1px rgba(52, 31, 55, 0.22)
+      z-index: 0
+    &--thick.frame-arc--plum
+      box-shadow: 0 0 0 3px rgba(52, 31, 55, 0.16)
+    &--xs
+      width: 1.4rem
+    &--sm
+      width: 2.6rem
+    &--md
+      width: 4.6rem
+    &--lg
+      width: 8rem
+    &--xl
+      width: 12rem
+    &--left
+      left: 0
+      transform: translateX(-50%)
+    &--right
+      right: 0
+      transform: translateX(50%)
+  &-rings
+    position: absolute
+    top: 50%
+    left: 50%
+    width: 9rem
+    height: 9rem
+    transform: translate(-50%, -50%)
+    pointer-events: none
+    z-index: 1
+    opacity: 0
+    span
+      position: absolute
+      top: 50%
+      left: 50%
+      border-radius: 50%
+      border: 1px solid rgba(247, 249, 250, 0.12)
+      transform: translate(-50%, -50%)
+      &:nth-child(1)
+        width: 40%
+        height: 40%
+      &:nth-child(2)
+        width: 70%
+        height: 70%
+      &:nth-child(3)
+        width: 100%
+        height: 100%
+    &--light span
+      border-color: rgba(175, 80, 255, 0.25)
+  &-sky
+    position: relative
+    min-height: 100vh
+    display: flex
+    align-items: flex-end
+    overflow: hidden
+    background: var(--color-near-black)
+    &__image
+      position: absolute
+      inset: 0
+      z-index: 1
+      pointer-events: none
+      background-image: url('/clouds.png')
+      background-size: cover
+      background-position: center 60%
+      background-repeat: no-repeat
+    &__sundim
+      position: absolute
+      inset: 0
+      z-index: 1
+      pointer-events: none
+      // Multiply blend dims the sun in proportion to what's underneath,
+      // so the darkening follows the image's own light and leaves no
+      // visible edge. Warm tones keep the sunset hue instead of greying it.
+      mix-blend-mode: multiply
+      background: radial-gradient(42% 52% at 84% 62%, rgba(150, 82, 66, 0.8), rgba(172, 105, 92, 0.55) 35%, rgba(198, 140, 125, 0.32) 58%, rgba(224, 180, 165, 0.14) 76%, transparent 92%)
+    &__vignette
+      position: absolute
+      inset: 0
+      z-index: 2
+      pointer-events: none
+      // Corner-darkening vignette + soft fade from the near-black
+      // section above, dope.security style.
+      background: radial-gradient(115% 115% at 50% 55%, transparent 42%, rgba(9, 9, 9, 0.55) 78%, rgba(9, 9, 9, 0.92) 100%), linear-gradient(180deg, var(--color-near-black) 0%, rgba(9, 9, 9, 0.6) 12%, transparent 34%), linear-gradient(0deg, rgba(9, 9, 9, 0.75) 0%, transparent 26%)
+    &__sonar
+      position: absolute
+      left: 50%
+      bottom: -2.4rem
+      width: 9rem
+      height: 9rem
+      transform: translateX(-50%)
+      z-index: 2
+      pointer-events: none
+      span
+        position: absolute
+        inset: 0
+        border-radius: 50%
+        border: 1px solid rgba(225, 189, 255, 0.5)
+        opacity: 0
+        animation: frameSonar 7s ease-out infinite
+        &:nth-child(2)
+          animation-delay: 2.33s
+        &:nth-child(3)
+          animation-delay: 4.66s
+    &__inner
+      position: relative
+      z-index: 3
+      width: 100%
+      max-width: 13rem
+      margin: 0 auto
+      padding: 1.6rem 0.8rem 0.9rem
+      transform: translateX(-1.1rem)
+    &__title
+      font-family: var(--font-display)
+      font-style: italic
+      font-weight: 400
+      font-size: 1.1rem
+      line-height: 1.0
+      letter-spacing: -0.03rem
+      color: var(--color-almost-white)
+      margin: 0.3rem 0 0.55rem
+      em
+        color: var(--color-lavender-mist)
+    &__actions
+      display: flex
+      gap: 0.3rem
+  &-footer
+    position: relative
+    z-index: 3
+    display: flex
+    align-items: center
+    justify-content: space-between
+    gap: 0.4rem
+    padding: 0.5rem 0.8rem
+    background: var(--color-near-black)
+    color: var(--color-almost-white)
+    border-top: 1px solid rgba(247, 249, 250, 0.15)
+    &__left, &__right
+      display: flex
+      align-items: center
+      gap: 0.24rem
+      font-size: 0.14rem
+      letter-spacing: 0.01rem
+    &__left span, &__right span
+      white-space: nowrap
+    &__plus
+      font-size: 0.26rem
+      line-height: 1
+      opacity: 0.8
+    &__heart
+      color: var(--color-signal-violet)
+      font-size: 0.18rem
+  &-coord
+    font-variant-numeric: tabular-nums
+    color: var(--color-steel)
+
+@keyframes frameEcho
+  0%
+    transform: scale(1)
+    opacity: 0.9
+  100%
+    transform: scale(3.2)
+    opacity: 0
+
+@keyframes frameSonar
+  0%
+    transform: scale(0.1)
+    opacity: 0
+  8%
+    opacity: 0.75
+  100%
+    transform: scale(1.05)
+    opacity: 0
+
+@keyframes frameTap
+  0%
+    transform: translate(-50%, -50%) scale(0)
+    opacity: 0.9
+  100%
+    transform: translate(-50%, -50%) scale(14)
+    opacity: 0
+
+@media only screen and (max-width: 850px)
+  .frame
+    &-compare,
+    &-steps,
+    &-grid,
+    &-tiers,
+    &-privacy__list
+      grid-template-columns: 1fr

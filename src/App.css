@@ -15,17 +15,12 @@
   height: 72px;
   padding: 0 16.75%;
   box-sizing: border-box;
-  background: transparent;
+  background: #e0d8eb;
   border: none;
   outline: none;
   box-shadow: none;
-  pointer-events: none;
-}
-
-.toolbar-brand,
-.toolbar-nav,
-.toolbar-download {
   pointer-events: auto;
+  transition: background 0.35s ease;
 }
 
 .toolbar-brand {
@@ -35,6 +30,7 @@
   letter-spacing: 0.04em;
   line-height: 1;
   color: #1a1a1a;
+  transition: color 0.35s ease;
 }
 
 .toolbar-nav {
@@ -48,7 +44,7 @@
   font-size: 24px;
   color: #1a1a1a;
   text-decoration: none;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease, color 0.35s ease;
 }
 
 .toolbar-nav a:hover {
@@ -64,11 +60,28 @@
   border-radius: 999px;
   padding: 6px 20px;
   cursor: pointer;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease, color 0.35s ease, background 0.35s ease;
+  text-decoration: none;
+  display: inline-block;
 }
 
 .toolbar-download:hover {
   opacity: 0.85;
+}
+
+/* When the dark content sits beneath the fixed toolbar, flip to white */
+.toolbar--over-dark {
+  background: #090909;
+}
+
+.toolbar--over-dark .toolbar-brand,
+.toolbar--over-dark .toolbar-nav a {
+  color: #f7f9fa;
+}
+
+.toolbar--over-dark .toolbar-download {
+  color: #090909;
+  background: #f7f9fa;
 }
 
 .cicada-page .header {

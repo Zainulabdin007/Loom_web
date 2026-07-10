@@ -147,88 +147,12 @@ export function initCicadaAnimations() {
     }, '>-=0.15')
       .set('.tree svg', {
       display: 'block',
-    }, '<-=0.1')
-      .fromTo('.tree-svg__bottom',
-              {
-      drawSVG: '0%',
-      strokeWidth: 33,
-    },
-              {
-      drawSVG: '100%',
-      strokeWidth: 33,
-      duration: 0.5,
-    }, '<'
-             )
-      .fromTo('.tree-svg__top', {
-      drawSVG: '0%',
-      strokeWidth: 33,
-    }, {
-      drawSVG: '100%',
-      strokeWidth: 33,
-      duration: 0.5,
-    })
-      .fromTo('.tree-svg__left', {
-      drawSVG: '0%',
-      strokeWidth: 33,
-      rotate: '25deg',
-      transformOrigin: 'bottom right',
-    }, {
-      drawSVG: '75%',
-      strokeWidth: 33,
-      rotate: '25deg',
-      transformOrigin: 'bottom right',
-      duration: 0.5,
-    }, '<')
-      .fromTo('.tree-svg__right', {
-      drawSVG: '0%',
-      strokeWidth: 33,
-      rotate: '-25deg',
-      transformOrigin: 'bottom left',
-    }, {
-      drawSVG: '75%',
-      strokeWidth: 33,
-      rotate: '-25deg',
-      transformOrigin: 'bottom left',
-      duration: 0.5,
-    }, '<')
-      .fromTo('.tree-svg__right-top', {
-      drawSVG: '0%',
-      strokeWidth: 33,
-      rotate: '-13deg',
-      transformOrigin: 'bottom left',
-    }, {
-      drawSVG: '85%',
-      strokeWidth: 33,
-      rotate: '-13deg',
-      transformOrigin: 'bottom left',
-      duration: 0.5,
-    }, '<')
-      .fromTo('.tree-svg__left-top', {
-      drawSVG: '0%',
-      strokeWidth: 33,
-      rotate: '13deg',
-      transformOrigin: 'bottom right',
-    }, {
-      drawSVG: '85%',
-      strokeWidth: 33,
-      rotate: '13deg',
-      transformOrigin: 'bottom right',
-      duration: 0.5,
-    }, '<')
-      .to('.tree-svg__branches', {
-      drawSVG: '100%',
-      strokeWidth: 3,
-      rotate: '0',
-      duration: 0.5,
-    })
-      .to('.tree-svg__bottom', {
-      strokeWidth: 3,
-      duration: 0.5,
+      opacity: 0,
     }, '<')
       .to('.tree-circle', {
       scale: 0.65,
       duration: 0.5,
-    }, '<')
+    })
       .set('.tree-circle__big', {
       boxShadow: '0 0 0 200px var(--color-fat-tuesday)',
     }, '<')
@@ -249,27 +173,6 @@ export function initCicadaAnimations() {
       scale: 1,
       duration: 0.4,
     })
-      .fromTo('.tree-name', {
-      y: '-100%',
-      opacity: 0,
-    }, {
-      y: 0,
-      opacity: 1,
-      duration: 0.4,
-    }, '<')
-      .fromTo('.tree-title span', {
-      y: '100%',
-      opacity: 0,
-    }, {
-      y: 0,
-      opacity: 1,
-      duration: 0.4,
-    })
-      .to('.tree-ball', {
-      opacity: 1,
-      scale: 1,
-      duration: 0.4,
-    }, '<')
       .call(function () {
       hoverActive = true;
     });
@@ -460,6 +363,117 @@ export function initCicadaAnimations() {
     })
   }
 
+  const fadeEls = gsap.utils.toArray('.fade-up')
+  if (fadeEls.length) {
+    gsap.set(fadeEls, { opacity: 0, y: 40 })
+    ScrollTrigger.batch(fadeEls, {
+      start: 'top 88%',
+      onEnter: (batch) =>
+        gsap.to(batch, {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          ease: 'power2.out',
+          stagger: 0.08,
+          overwrite: true,
+        }),
+    })
+  }
+
+  // Step numbers replay the tree's ink-collapse: a solid violet disc
+  // that drains into a thin ring as each step enters the viewport.
+  const stepNums = gsap.utils.toArray('.frame-step__num')
+  if (stepNums.length) {
+    stepNums.forEach((num) => {
+      const step = num.closest('.frame-step')
+      const isOrange = step?.classList.contains('frame-step--orange')
+      const fill = isOrange ? 'rgba(232, 135, 74, 0.9)' : 'rgba(175, 80, 255, 0.9)'
+      const ring = isOrange ? 'rgba(232, 135, 74, 0.7)' : 'rgba(175, 80, 255, 0.65)'
+
+      gsap.set(num, { boxShadow: '0 0 0 1px rgba(0, 0, 0, 0)' })
+      ScrollTrigger.create({
+        trigger: num,
+        start: 'top 85%',
+        once: true,
+        onEnter: () =>
+          gsap.fromTo(
+            num,
+            { boxShadow: `0 0 0 40px ${fill}` },
+            {
+              boxShadow: `0 0 0 1px ${ring}`,
+              duration: 0.9,
+              ease: 'power2.out',
+            },
+          ),
+      })
+    })
+  }
+
+  // Privacy bullets wake up with a repeating sonar echo once seen.
+  const privacyItems = gsap.utils.toArray('.frame-privacy__list li')
+  if (privacyItems.length) {
+    ScrollTrigger.batch(privacyItems, {
+      start: 'top 85%',
+      once: true,
+      onEnter: (batch) =>
+        batch.forEach((item, index) => {
+          gsap.delayedCall(index * 0.35, () => item.classList.add('is-live'))
+        }),
+    })
+  }
+
+  // Edge arcs drift slowly against the scroll for parallax depth.
+  gsap.utils.toArray('.frame .frame-arc').forEach((arc, index) => {
+    const drift = 14 + (index % 3) * 8
+    gsap.fromTo(
+      arc,
+      { yPercent: drift },
+      {
+        yPercent: -drift,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: arc.closest('.frame-section') || arc,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true,
+        },
+      },
+    )
+  })
+
+  gsap.utils.toArray('.frame-rings').forEach((rings) => {
+    gsap.fromTo(
+      rings,
+      { scale: 0.65, opacity: 0 },
+      {
+        scale: 1,
+        opacity: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: rings.closest('.frame-section') || rings,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true,
+        },
+      },
+    )
+  })
+
+  const toolbar = document.querySelector('.toolbar')
+  const frame = document.querySelector('.frame')
+  if (toolbar && frame) {
+    ScrollTrigger.create({
+      trigger: frame,
+      start: 'top top',
+      end: 'bottom top',
+      onToggle: (self) => {
+        toolbar.classList.toggle('toolbar--over-dark', self.isActive)
+      },
+    })
+  }
+
+  ScrollTrigger.refresh()
+
   return () => {
     ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
     tlAnimation.kill()
@@ -467,6 +481,7 @@ export function initCicadaAnimations() {
     tlSound.kill()
     tlSound2.kill()
     hoverTimelines.forEach((timeline) => timeline.kill())
+    toolbar?.classList.remove('toolbar--over-dark')
     audio?.pause()
     listeners.forEach(({ element, event, handler }) => {
       element.removeEventListener(event, handler)

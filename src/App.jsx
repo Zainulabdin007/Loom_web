@@ -5,7 +5,7 @@ function App() {
   return (
     <div className="app">
       <header className="toolbar">
-        <span className="toolbar-brand">Loom</span>
+        <span className="toolbar-brand">Frame</span>
 
         <nav className="toolbar-nav">
           <a href="#about">about</a>
@@ -13,9 +13,9 @@ function App() {
           <a href="#product">product</a>
         </nav>
 
-        <button type="button" className="toolbar-download">
+        <a href="#download" className="toolbar-download">
           download
-        </button>
+        </a>
       </header>
 
       <HomePage />
