@@ -1,11 +1,15 @@
 import './App.css'
 import HomePage from './HomePage'
+import logo from './assets/logo.png'
 
 function App() {
   return (
     <div className="app">
       <header className="toolbar">
-        <span className="toolbar-brand">Frame</span>
+        <div className="toolbar-brand">
+          <img src={logo} alt="" className="toolbar-logo" />
+          <span>Frame</span>
+        </div>
 
         <nav className="toolbar-nav">
           <a href="#about">about</a>

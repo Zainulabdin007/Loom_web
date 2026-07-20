@@ -24,6 +24,9 @@
 }
 
 .toolbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 2px;
   font-family: 'Just Another Hand', cursive;
   font-size: 44px;
   font-weight: 400;
@@ -31,6 +34,14 @@
   line-height: 1;
   color: #1a1a1a;
   transition: color 0.35s ease;
+}
+
+.toolbar-logo {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  flex-shrink: 0;
+  margin-right: -6px;
 }
 
 .toolbar-nav {
