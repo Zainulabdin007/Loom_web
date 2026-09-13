@@ -17,7 +17,12 @@ function App() {
           <a href="#product">product</a>
         </nav>
 
-        <a href="#download" className="toolbar-download">
+        <a
+          href="https://github.com/Zainulabdin007/Frame_IDE/releases/tag/v0.1.0-beta"
+          className="toolbar-download"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           download
         </a>
       </header>

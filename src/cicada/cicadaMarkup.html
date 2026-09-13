@@ -497,38 +497,39 @@ export async function optionalAuth(
     <div class="frame-rings frame-rings--light" aria-hidden="true"><span></span><span></span><span></span></div>
     <div class="frame-inner">
       <p class="frame-eyebrow fade-up"><i class="frame-ping" aria-hidden="true"></i>Download</p>
-      <h2 class="frame-h2 fade-up">Pick your Frame.</h2>
-      <p class="frame-lead fade-up">Choose the build that fits your hardware. Every tier runs 100% locally. The only difference is precision and footprint.</p>
+      <h2 class="frame-h2 fade-up">Get Frame from GitHub.</h2>
+      <p class="frame-lead fade-up">Three editions, one IDE. Each button opens that edition’s GitHub Release — same Frame agent LoRA on every page; you download the matching base GGUF (4-bit / 8-bit / FP16). Paste the release notes into ChatGPT if you want a walkthrough.</p>
       <div class="frame-tiers">
         <div class="frame-tier fade-up">
-          <h3 class="frame-tier__name">Lite</h3>
-          <p class="frame-tier__q">4-bit quantization</p>
+          <h3 class="frame-tier__name">Efficient</h3>
+          <p class="frame-tier__q">4-bit · recommended default</p>
           <ul class="frame-tier__specs">
             <li><span>RAM</span><strong>16GB min</strong></li>
             <li><span>VRAM</span><strong>6&ndash;8GB</strong></li>
           </ul>
-          <button type="button" class="frame-dl">Download Lite</button>
+          <a class="frame-dl" href="https://github.com/Zainulabdin007/Frame_IDE/releases/tag/v0.1.0-beta" target="_blank" rel="noopener noreferrer">Efficient release</a>
         </div>
         <div class="frame-tier frame-tier--featured fade-up">
-          <span class="frame-tier__badge">Recommended</span>
-          <h3 class="frame-tier__name">Standard</h3>
-          <p class="frame-tier__q">8-bit quantization</p>
+          <span class="frame-tier__badge">8-bit</span>
+          <h3 class="frame-tier__name">Professional</h3>
+          <p class="frame-tier__q">8-bit · stronger reasoning</p>
           <ul class="frame-tier__specs">
             <li><span>RAM</span><strong>24GB min</strong></li>
             <li><span>VRAM</span><strong>10&ndash;12GB</strong></li>
           </ul>
-          <button type="button" class="frame-dl frame-dl--solid">Download Standard</button>
+          <a class="frame-dl frame-dl--solid" href="https://github.com/Zainulabdin007/Frame_IDE/releases/tag/v0.1.0-beta-professional" target="_blank" rel="noopener noreferrer">Professional release</a>
         </div>
         <div class="frame-tier fade-up">
-          <h3 class="frame-tier__name">Full</h3>
-          <p class="frame-tier__q">FP16</p>
+          <h3 class="frame-tier__name">Maximum</h3>
+          <p class="frame-tier__q">FP16 · highest fidelity</p>
           <ul class="frame-tier__specs">
             <li><span>RAM</span><strong>32GB min</strong></li>
             <li><span>VRAM</span><strong>16GB+</strong></li>
           </ul>
-          <button type="button" class="frame-dl">Download Full</button>
+          <a class="frame-dl" href="https://github.com/Zainulabdin007/Frame_IDE/releases/tag/v0.1.0-beta-maximum" target="_blank" rel="noopener noreferrer">Maximum release</a>
         </div>
       </div>
+      <p class="frame-lead fade-up" style="margin-top: 0.5rem">Guides: <code>docs/DOWNLOAD.md</code> · IDE installers attach to the Efficient release when CI finishes.</p>
     </div>
   </section>
 
@@ -541,7 +542,7 @@ export async function optionalAuth(
       <p class="frame-eyebrow"><i class="frame-ping" aria-hidden="true"></i>The last word</p>
       <h2 class="frame-sky__title">Your code, <em>your</em> model.<br>Nothing ever leaves the ground.</h2>
       <div class="frame-sky__actions">
-        <a href="#download" class="frame-dl frame-dl--solid">Download Frame</a>
+        <a href="https://github.com/Zainulabdin007/Frame_IDE/releases/tag/v0.1.0-beta" class="frame-dl frame-dl--solid" target="_blank" rel="noopener noreferrer">Download Frame</a>
       </div>
     </div>
   </section>
