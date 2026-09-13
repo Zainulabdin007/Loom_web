@@ -483,13 +483,16 @@ export function initCicadaAnimations() {
   const toolbar = document.querySelector('.toolbar')
   const frame = document.querySelector('.frame')
   if (toolbar && frame) {
+    const syncToolbarTheme = (self) => {
+      toolbar.classList.toggle('toolbar--over-dark', self.isActive)
+    }
+
     ScrollTrigger.create({
       trigger: frame,
       start: 'top top',
       end: 'bottom top',
-      onToggle: (self) => {
-        toolbar.classList.toggle('toolbar--over-dark', self.isActive)
-      },
+      onToggle: syncToolbarTheme,
+      onRefresh: syncToolbarTheme,
     })
   }
 

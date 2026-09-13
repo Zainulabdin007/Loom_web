@@ -81,16 +81,16 @@
 }
 
 /* When the dark content sits beneath the fixed toolbar, flip to white */
-.toolbar--over-dark {
+.toolbar.toolbar--over-dark {
   background: #090909;
 }
 
-.toolbar--over-dark .toolbar-brand,
-.toolbar--over-dark .toolbar-nav a {
+.toolbar.toolbar--over-dark .toolbar-brand,
+.toolbar.toolbar--over-dark .toolbar-nav a {
   color: #f7f9fa;
 }
 
-.toolbar--over-dark .toolbar-download {
+.toolbar.toolbar--over-dark .toolbar-download {
   color: #090909;
   background: #f7f9fa;
 }
