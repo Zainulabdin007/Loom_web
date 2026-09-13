@@ -1,22 +1,25 @@
 import { useEffect } from 'react'
 import markup from './cicada/cicadaMarkup.html?raw'
 import './cicada/style.sass'
+import './cicada/frameShowcases.css'
 import { initCicadaAnimations } from './cicada/initCicadaAnimations'
-import { waitForGsap } from './cicada/waitForGsap'
+import { initFrameShowcases } from './cicada/initFrameShowcases'
 
 function HomePage() {
   useEffect(() => {
-    let cleanup
-    let active = true
+    let cleanupAnim
+    let cleanupShow
 
-    waitForGsap().then(() => {
-      if (!active) return
-      cleanup = initCicadaAnimations()
-    })
+    try {
+      cleanupAnim = initCicadaAnimations()
+      cleanupShow = initFrameShowcases()
+    } catch (error) {
+      console.error('[Frame] animation init failed', error)
+    }
 
     return () => {
-      active = false
-      cleanup?.()
+      cleanupAnim?.()
+      cleanupShow?.()
     }
   }, [])
 

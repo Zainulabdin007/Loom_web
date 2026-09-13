@@ -1,23 +1,38 @@
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { MotionPathPlugin } from 'gsap/MotionPathPlugin'
+import { SplitText } from 'gsap/SplitText'
+import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin'
+import { CustomEase } from 'gsap/CustomEase'
+
+// Ensure plugins that still peek at window.gsap resolve the same core instance.
+if (typeof window !== 'undefined') {
+  window.gsap = gsap
+  window.ScrollTrigger = ScrollTrigger
+}
+
+gsap.registerPlugin(
+  SplitText,
+  DrawSVGPlugin,
+  MotionPathPlugin,
+  ScrollTrigger,
+  CustomEase,
+)
+
+SplitText.register(gsap)
+CustomEase.register(gsap)
+ScrollTrigger.register(gsap)
+
 export function initCicadaAnimations() {
   const listeners = []
   const hoverTimelines = []
+  const splitInstances = []
   const addListener = (element, event, handler) => {
     element.addEventListener(event, handler)
     listeners.push({ element, event, handler })
   }
 
-  const { gsap, ScrollTrigger, MotionPathPlugin, SplitText, DrawSVGPlugin, CustomEase } =
-    window
-
   ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
-
-  gsap.registerPlugin(
-    SplitText,
-    DrawSVGPlugin,
-    MotionPathPlugin,
-    ScrollTrigger,
-    CustomEase,
-  )
 
   CustomEase.create('yButterfly', '.17,.17,.43,1')
   CustomEase.create('butterflyShow', '.17,.17,.46,1')
@@ -37,17 +52,19 @@ export function initCicadaAnimations() {
   let hoverActive = false
 
   function initSplitText(elements) {
-    const textWrappers = document.querySelectorAll(elements);
-    if (!textWrappers.length) return false;
-    new SplitText(elements, { type: 'lines', linesClass: 'fade-overflow' });
+    const textWrappers = document.querySelectorAll(elements)
+    if (!textWrappers.length) return false
+    splitInstances.push(
+      SplitText.create(elements, { type: 'lines', linesClass: 'fade-overflow' }),
+    )
 
-    textWrappers.forEach(textWrapper => {
+    textWrappers.forEach((textWrapper) => {
       textWrapper.querySelectorAll('.fade-overflow').forEach((letterWrapp) => {
-        const letter = letterWrapp.innerHTML;
-        letterWrapp.innerText = '';
-        letterWrapp.innerHTML = `<div class='fade-el'>${letter}</div>`;
-      });
-    });
+        const letter = letterWrapp.innerHTML
+        letterWrapp.innerText = ''
+        letterWrapp.innerHTML = `<div class='fade-el'>${letter}</div>`
+      })
+    })
   }
 
   initSplitText('.split');
@@ -64,17 +81,7 @@ export function initCicadaAnimations() {
 
   const tlAnimation = gsap.timeline({
     defaults: { duration: 1.2 },
-    scrollTrigger: {
-      trigger: 'main',
-      start: 'top top',
-      end: 'bottom bottom',
-      scrub: true,
-      invalidateOnRefresh: true,
-      onEnter: () => {
-        hoverActive = false;
-      },
-    },
-  });
+  })
 
   function gotoSection(index) {
     index = wrap(index);
@@ -184,9 +191,23 @@ export function initCicadaAnimations() {
     }
   });
 
-  treeAnimation();
+  treeAnimation()
+
+  // Build the scrubber after tweens exist so ScrollTrigger measures a real timeline.
+  ScrollTrigger.create({
+    animation: tlAnimation,
+    trigger: '#main',
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: true,
+    invalidateOnRefresh: true,
+    onEnter: () => {
+      hoverActive = false
+    },
+  })
 
   ScrollTrigger.refresh()
+  requestAnimationFrame(() => ScrollTrigger.refresh())
 
   const onResize = () => ScrollTrigger.refresh()
   addListener(window, 'resize', onResize)
@@ -475,6 +496,7 @@ export function initCicadaAnimations() {
   ScrollTrigger.refresh()
 
   return () => {
+    splitInstances.forEach((instance) => instance.revert())
     ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
     tlAnimation.kill()
     tlCircles.kill()

@@ -72,8 +72,165 @@
       <p class="frame-eyebrow fade-up"><i class="frame-ping" aria-hidden="true"></i>Meet Frame</p>
       <h2 class="frame-h1 fade-up">The AI IDE that learns <span>you.</span></h2>
       <p class="frame-lead fade-up">Frame is a local-first AI coding IDE that personalizes itself to how you write code. It is a familiar editor with a chat assistant on the side, running entirely on your machine, with nothing ever leaving your device.</p>
-      <div class="frame-video frame-video--orange fade-up">
-        <span class="frame-video__label">[ demo clip: product overview ]</span>
+      <div class="frame-showcase frame-showcase--orange" data-frame-showcase="overview">
+        <div class="frame-showcase__desk" data-fs-desk>
+          <div class="fs-win fs-win--desktop is-front" data-fs-win="desktop" style="--x:3%;--y:4%;--w:46%;--h:88%;">
+            <div class="fs-titlebar" data-fs-drag>
+              <div class="fs-traffic" aria-label="Window controls">
+                <button type="button" class="fs-traffic__btn fs-traffic__btn--close" data-fs-close title="Close" aria-label="Close"></button>
+                <button type="button" class="fs-traffic__btn fs-traffic__btn--min" data-fs-min title="Minimize" aria-label="Minimize"></button>
+                <button type="button" class="fs-traffic__btn fs-traffic__btn--max" data-fs-max title="Zoom" aria-label="Zoom"></button>
+              </div>
+              <div class="fs-title" data-fs-win-title>Frame Desktop · Models</div>
+            </div>
+            <div class="fs-shell">
+              <nav class="fs-activity" aria-label="Activity">
+                <button type="button" class="fs-act is-active" data-fs-act="frame" title="Frame" aria-label="Frame">
+                  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 2h5v5H2V2zm7 0h5v5H9V2zM2 9h5v5H2V9zm7 0h5v5H9V9z"/></svg>
+                </button>
+                <button type="button" class="fs-act" data-fs-act="search" title="Search" aria-label="Search">
+                  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.7 9.3a4.5 4.5 0 1 0-.4.4l3.2 3.2.4-.4-3.2-3.2zM6.5 10a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z"/></svg>
+                </button>
+                <button type="button" class="fs-act" data-fs-act="scm" title="Source Control" aria-label="Source Control">
+                  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.5 3a1.5 1.5 0 1 1-1.4 2H7.5A2.5 2.5 0 0 0 5 7.5v1.1a1.5 1.5 0 1 1-1 0V7.5A3.5 3.5 0 0 1 7.5 4h1.6A1.5 1.5 0 0 1 10.5 3zm-7 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm7-8a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></svg>
+                </button>
+                <button type="button" class="fs-act" data-fs-act="ext" title="Extensions" aria-label="Extensions">
+                  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 1v2H3v2H1v6h2v2h2v2h6v-2h2v-2h2V5h-2V3h-2V1H5zm1 1h4v2h2v2h2v4h-2v2h-2v2H6v-2H4v-2H2V6h2V4h2V2z"/></svg>
+                </button>
+              </nav>
+              <div class="fs-views">
+                <div class="fs-panel is-active" data-fs-view="frame">
+                  <h3>Frame</h3>
+                  <p class="fs-sub">Local models, runtime, and on-device learning for this workspace.</p>
+                  <div class="fs-statrow">
+                    <div class="fs-stat"><span>Context</span><strong>32k</strong></div>
+                    <div class="fs-stat"><span>VRAM</span><strong>6.1 GB</strong></div>
+                    <div class="fs-stat"><span>Tok/s</span><strong>~38</strong></div>
+                  </div>
+                  <div class="fs-card">
+                    <div class="fs-card__label">Installed · active</div>
+                    <div class="fs-card__title">Efficient · Qwen2.5-Coder 7B</div>
+                    <div class="fs-card__meta">GGUF Q5_K_M · ready on device</div>
+                    <div class="fs-path">~/Library/Application Support/Frame/models/efficient-7b.gguf</div>
+                    <div class="fs-row" style="margin-top:8px;margin-bottom:0"><span>Runtime</span><button type="button" class="fs-toggle" data-fs-toggle>On</button></div>
+                  </div>
+                  <div class="fs-card fs-card--muted">
+                    <div class="fs-card__label">Recommended</div>
+                    <div class="fs-card__title">Maximum · Qwen2.5-Coder 14B</div>
+                    <div class="fs-card__meta">Stronger planning · needs ~12 GB VRAM</div>
+                    <button type="button" class="fs-btn fs-btn--ghost fs-btn--sm" data-fs-toast-msg="Download stays on your machine (demo)">View requirements</button>
+                  </div>
+                  <h4 class="fs-h4">Learning queue</h4>
+                  <ul class="fs-list">
+                    <li><strong>AppError in middleware</strong><span>seen 4× · awaiting approve</span></li>
+                    <li><strong>Early-return guards</strong><span>accepted twice this week</span></li>
+                    <li><strong>No bare Error throws</strong><span>reverted once · still learning</span></li>
+                  </ul>
+                  <div class="fs-card fs-card--muted">
+                    <div class="fs-card__label">Adapter · this project</div>
+                    <div class="fs-card__title">LoRA · last train Tue 2:14 AM</div>
+                    <div class="fs-card__meta">Next run after 2 more approved preferences · offline only</div>
+                  </div>
+                </div>
+                <div class="fs-panel" data-fs-view="search" hidden>
+                  <h3>Search</h3>
+                  <p class="fs-sub">Workspace search plus Frame memory — both stay local.</p>
+                  <div class="fs-searchbox" aria-hidden="true">AppError middleware</div>
+                  <h4 class="fs-h4">Files</h4>
+                  <ul class="fs-list fs-list--hits">
+                    <li><code>src/middleware/auth.ts</code><span>line 18 · throw new AppError</span></li>
+                    <li><code>src/errors/AppError.ts</code><span>class AppError</span></li>
+                    <li><code>src/routes/session.ts</code><span>invalid session</span></li>
+                  </ul>
+                  <h4 class="fs-h4">Frame memory</h4>
+                  <ul class="fs-list fs-list--hits">
+                    <li><strong>Prefer AppError</strong><span>preference · pending approve</span></li>
+                    <li><strong>Early returns over nested if</strong><span>style · confidence high</span></li>
+                  </ul>
+                </div>
+                <div class="fs-panel" data-fs-view="scm" hidden>
+                  <h3>Source Control</h3>
+                  <p class="fs-sub">Git stays yours. Frame only watches what you stage, accept, and discard — then asks before anything becomes a preference.</p>
+                  <div class="fs-branch">
+                    <span class="fs-branch__name">feature/auth-guards</span>
+                    <span class="fs-branch__meta">↑ 1 · ↓ 0 · local only</span>
+                  </div>
+                  <div class="fs-card">
+                    <div class="fs-card__label">Commit draft · generated on device</div>
+                    <div class="fs-card__title">fix(auth): use AppError for guard failures</div>
+                    <div class="fs-card__meta">Matches your last 3 auth commits · edit freely before commit</div>
+                  </div>
+                  <h4 class="fs-h4">Staged <em>2</em></h4>
+                  <ul class="fs-scm">
+                    <li>
+                      <span class="fs-scm__file">M auth.ts</span>
+                      <span class="fs-scm__tag fs-scm__tag--learn">Frame saw Accept</span>
+                    </li>
+                    <li>
+                      <span class="fs-scm__file">M AppError.ts</span>
+                      <span class="fs-scm__tag">unchanged style</span>
+                    </li>
+                  </ul>
+                  <h4 class="fs-h4">Changes <em>1</em></h4>
+                  <ul class="fs-scm">
+                    <li>
+                      <span class="fs-scm__file">M session.ts</span>
+                      <span class="fs-scm__tag fs-scm__tag--warn">hunk discarded · not learning</span>
+                    </li>
+                  </ul>
+                  <div class="fs-card fs-card--muted">
+                    <div class="fs-card__label">Why this panel matters</div>
+                    <div class="fs-card__meta" style="margin-top:0">Accepts that land in a commit become strong signals. Reverts and unstaged discards teach Frame what not to suggest — without sending diffs anywhere.</div>
+                  </div>
+                  <ul class="fs-list">
+                    <li><strong>Signal graph</strong><span>Accept → stage → commit</span></li>
+                    <li><strong>Privacy</strong><span>no remote · no telemetry</span></li>
+                    <li><strong>Next prompt</strong><span>approve “AppError” preference?</span></li>
+                  </ul>
+                </div>
+                <div class="fs-panel" data-fs-view="ext" hidden>
+                  <h3>Extensions</h3>
+                  <p class="fs-sub">Companion tools that never need a cloud account.</p>
+                  <ul class="fs-list">
+                    <li><strong>Frame Models</strong><span>built-in · managing GGUF</span></li>
+                    <li><strong>Frame Learning</strong><span>built-in · preferences &amp; LoRA</span></li>
+                    <li><strong>Local Diff Lens</strong><span>installed · richer confirm UI</span></li>
+                    <li><strong>Offline Spell for Code</strong><span>recommended · 12 MB</span></li>
+                  </ul>
+                  <div class="fs-card fs-card--muted">
+                    <div class="fs-card__label">Policy</div>
+                    <div class="fs-card__meta" style="margin-top:0">Extensions that phone home are blocked by default in Frame builds.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="fs-win fs-win--agent" data-fs-win="agent" style="--x:52%;--y:8%;--w:45%;--h:82%;">
+            <div class="fs-titlebar" data-fs-drag>
+              <div class="fs-traffic" aria-label="Window controls">
+                <button type="button" class="fs-traffic__btn fs-traffic__btn--close" data-fs-close title="Close" aria-label="Close"></button>
+                <button type="button" class="fs-traffic__btn fs-traffic__btn--min" data-fs-min title="Minimize" aria-label="Minimize"></button>
+                <button type="button" class="fs-traffic__btn fs-traffic__btn--max" data-fs-max title="Zoom" aria-label="Zoom"></button>
+              </div>
+              <div class="fs-title">Agent · this workspace</div>
+            </div>
+            <div class="fs-chat">
+              <div class="fs-chat__body">
+                <div class="fs-chip">Local · Efficient · read-only demo</div>
+                <div class="fs-bubble fs-bubble--user">Tighten auth middleware — keep our existing error shape.</div>
+                <div class="fs-tool"><strong>read</strong> src/middleware/auth.ts</div>
+                <div class="fs-tool"><strong>edit plan</strong> guard early return · match AppError</div>
+                <div class="fs-bubble fs-bubble--assistant">Drafted a plan that preserves <code>AppError</code> and your early-return style. Accept when it looks right — Frame will learn from the confirm.</div>
+                <p class="fs-chat__note">Messaging is disabled in this preview. Open Frame Desktop to chat for real.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="fs-dock" data-fs-dock hidden></div>
+        </div>
+        <div class="fs-toast" data-fs-toast></div>
+      </div>
       </div>
     </div>
   </section>
@@ -119,7 +276,56 @@
         <div class="frame-step frame-step--orange fade-up"><span class="frame-step__num">03</span><h3>You confirm</h3><p>Every change to your model is shown as a before / after. You choose what sticks. Nothing is silent.</p></div>
         <div class="frame-step frame-step--violet fade-up"><span class="frame-step__num">04</span><h3>Frame improves</h3><p>Offline, between sessions, it refines itself to match your style. Never mid-flow. Only after it is sure.</p></div>
       </div>
-      <div class="frame-video fade-up"><span class="frame-video__label">[ demo clip: the confirm before / after flow ]</span></div>
+      <div class="frame-showcase" data-frame-showcase="confirm">
+        <div class="frame-showcase__desk" data-fs-desk>
+          <div class="fs-win fs-win--confirm is-front" data-fs-win="confirm" style="--x:4%;--y:5%;--w:92%;--h:90%;">
+            <div class="fs-titlebar" data-fs-drag>
+              <div class="fs-traffic" aria-label="Window controls">
+                <button type="button" class="fs-traffic__btn fs-traffic__btn--close" data-fs-close title="Close" aria-label="Close"></button>
+                <button type="button" class="fs-traffic__btn fs-traffic__btn--min" data-fs-min title="Minimize" aria-label="Minimize"></button>
+                <button type="button" class="fs-traffic__btn fs-traffic__btn--max" data-fs-max title="Zoom" aria-label="Zoom"></button>
+              </div>
+              <div class="fs-title">Confirm · before / after</div>
+            </div>
+            <div class="frame-showcase__stage frame-showcase__stage--confirm">
+              <div class="fs-diff">
+                <div class="fs-diff__label fs-diff__label--before">Before · auth.ts</div>
+                <pre class="fs-code"><span class="del">- if (!token) throw new Error("unauthorized")</span>
+  const user = await session(token)
+<span class="del">- if (!user) return res.status(401).end()</span>
+  return next()</pre>
+              </div>
+              <div class="fs-diff">
+                <div class="fs-diff__label fs-diff__label--after">After · proposed</div>
+                <pre class="fs-code"><span class="add">+ if (!token) throw new AppError(401, "unauthorized")</span>
+  const user = await session(token)
+<span class="add">+ if (!user) throw new AppError(401, "invalid session")</span>
+  return next()</pre>
+              </div>
+              <div class="fs-confirm-bar">
+                <p data-fs-status>Edit plan ready · <strong>Accept</strong> applies, <strong>Undo</strong> reverts</p>
+                <div class="fs-actions">
+                  <button type="button" class="fs-btn fs-btn--primary" data-fs-accept>Accept</button>
+                  <button type="button" class="fs-btn fs-btn--ghost" data-fs-undo>Undo</button>
+                </div>
+              </div>
+              <div class="fs-pref" data-fs-pref>
+                <div class="fs-pref__text">
+                  <span>Learning signal</span>
+                  Prefer AppError over generic Error in middleware — save for this project?
+                </div>
+                <div class="fs-actions">
+                  <button type="button" class="fs-btn fs-btn--primary" data-fs-approve>Approve</button>
+                  <button type="button" class="fs-btn fs-btn--ghost" data-fs-reject>Reject</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="fs-dock" data-fs-dock hidden></div>
+        </div>
+        <div class="fs-toast" data-fs-toast></div>
+      </div>
+      </div>
     </div>
   </section>
 
