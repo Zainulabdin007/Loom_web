@@ -118,7 +118,7 @@
                     <div class="fs-card__label">Recommended</div>
                     <div class="fs-card__title">Maximum · Qwen2.5-Coder 14B</div>
                     <div class="fs-card__meta">Stronger planning · needs ~12 GB VRAM</div>
-                    <button type="button" class="fs-btn fs-btn--ghost fs-btn--sm" data-fs-toast-msg="Download stays on your machine (demo)">View requirements</button>
+                    <button type="button" class="fs-btn fs-btn--ghost fs-btn--sm" data-fs-req>View requirements</button>
                   </div>
                   <h4 class="fs-h4">Learning queue</h4>
                   <ul class="fs-list">
@@ -220,16 +220,25 @@
                 <div class="fs-chip">Local · Efficient · read-only demo</div>
                 <div class="fs-bubble fs-bubble--user">Tighten auth middleware — keep our existing error shape.</div>
                 <div class="fs-tool"><strong>read</strong> src/middleware/auth.ts</div>
+                <div class="fs-tool"><strong>grep</strong> AppError · src/errors src/middleware</div>
+                <div class="fs-bubble fs-bubble--assistant">Found <code>AppError(status, message)</code> and three call sites that already early-return. I’ll mirror that instead of throwing bare <code>Error</code>.</div>
                 <div class="fs-tool"><strong>edit plan</strong> guard early return · match AppError</div>
                 <div class="fs-bubble fs-bubble--assistant">Drafted a plan that preserves <code>AppError</code> and your early-return style. Accept when it looks right — Frame will learn from the confirm.</div>
-                <p class="fs-chat__note">Messaging is disabled in this preview. Open Frame Desktop to chat for real.</p>
+                <div class="fs-bubble fs-bubble--user">Also fix the race on token refresh — don’t await session twice under the same lock.</div>
+                <div class="fs-tool"><strong>read</strong> src/session/refresh.ts:41-88</div>
+                <div class="fs-tool"><strong>read</strong> src/middleware/auth.ts:12-27</div>
+                <div class="fs-bubble fs-bubble--assistant">The double <code>await session(token)</code> sits under a non-reentrant mutex. I’ll coalesce into a single in-flight promise keyed by <code>jti</code> so concurrent requests share one refresh.</div>
+                <div class="fs-tool"><strong>edit plan</strong> dedupe refresh · Map&lt;jti, Promise&gt;</div>
+                <div class="fs-bubble fs-bubble--user">Use our existing <code>AsyncMemo</code> helper if it fits — don’t invent a new cache.</div>
+                <div class="fs-tool"><strong>read</strong> src/lib/asyncMemo.ts</div>
+                <div class="fs-bubble fs-bubble--assistant">Fits cleanly. Plan now uses <code>AsyncMemo.getOrCreate(jti, () =&gt; refresh(token))</code> and drops the ad-hoc Map. Ready for confirm.</div>
+                <p class="fs-chat__note">Messaging disabled in preview</p>
               </div>
             </div>
           </div>
 
           <div class="fs-dock" data-fs-dock hidden></div>
         </div>
-        <div class="fs-toast" data-fs-toast></div>
       </div>
     </div>
   </section>
@@ -289,17 +298,138 @@
             <div class="frame-showcase__stage frame-showcase__stage--confirm">
               <div class="fs-diff">
                 <div class="fs-diff__label fs-diff__label--before">Before · auth.ts</div>
-                <pre class="fs-code"><span class="del">- if (!token) throw new Error("unauthorized")</span>
-  const user = await session(token)
-<span class="del">- if (!user) return res.status(401).end()</span>
-  return next()</pre>
+                <pre class="fs-code">import type { Request, Response, NextFunction } from "express"
+import { session } from "../session/store"
+import { refresh } from "../session/refresh"
+import { metrics } from "../obs/metrics"
+
+const REFRESH_SKEW_MS = 30_000
+
+export async function requireAuth(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  const header = req.headers.authorization
+  if (!header?.startsWith("Bearer ")) {
+    metrics.inc("auth.missing_bearer")
+<span class="del">-   throw new Error("unauthorized")</span>
+  }
+
+  const token = header.slice("Bearer ".length).trim()
+  if (!token) {
+<span class="del">-   throw new Error("unauthorized")</span>
+  }
+
+  // Existing path: always hit session, then maybe refresh.
+  let user = await session(token)
+  if (!user) {
+<span class="del">-   return res.status(401).end()</span>
+  }
+
+  if (user.expiresAt - Date.now() &lt; REFRESH_SKEW_MS) {
+    // Bug: concurrent requests each await refresh under the same lock.
+<span class="del">-   user = await refresh(token)</span>
+<span class="del">-   user = await session(token)</span>
+    if (!user) {
+<span class="del">-     return res.status(401).json({ error: "session expired" })</span>
+    }
+  }
+
+  if (user.revoked) {
+<span class="del">-   throw new Error("token revoked")</span>
+  }
+
+  req.user = user
+  metrics.inc("auth.ok")
+  return next()
+}
+
+export async function optionalAuth(
+  req: Request,
+  _res: Response,
+  next: NextFunction,
+) {
+  const header = req.headers.authorization
+  if (!header?.startsWith("Bearer ")) return next()
+  try {
+    const token = header.slice(7)
+    req.user = await session(token)
+  } catch {
+<span class="del">-   // swallow — optional auth used to hide failures</span>
+  }
+  return next()
+}</pre>
               </div>
               <div class="fs-diff">
                 <div class="fs-diff__label fs-diff__label--after">After · proposed</div>
-                <pre class="fs-code"><span class="add">+ if (!token) throw new AppError(401, "unauthorized")</span>
-  const user = await session(token)
-<span class="add">+ if (!user) throw new AppError(401, "invalid session")</span>
-  return next()</pre>
+                <pre class="fs-code">import type { Request, Response, NextFunction } from "express"
+import { session } from "../session/store"
+import { refresh } from "../session/refresh"
+import { metrics } from "../obs/metrics"
+import { AppError } from "../errors/AppError"
+import { AsyncMemo } from "../lib/asyncMemo"
+
+const REFRESH_SKEW_MS = 30_000
+const refreshInflight = new AsyncMemo&lt;string, Awaited&lt;ReturnType&lt;typeof session&gt;&gt;&gt;()
+
+export async function requireAuth(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  const header = req.headers.authorization
+  if (!header?.startsWith("Bearer ")) {
+    metrics.inc("auth.missing_bearer")
+<span class="add">+   throw new AppError(401, "unauthorized")</span>
+  }
+
+  const token = header.slice("Bearer ".length).trim()
+  if (!token) {
+<span class="add">+   throw new AppError(401, "unauthorized")</span>
+  }
+
+  let user = await session(token)
+  if (!user) {
+<span class="add">+   throw new AppError(401, "invalid session")</span>
+  }
+
+  if (user.expiresAt - Date.now() &lt; REFRESH_SKEW_MS) {
+    // Coalesce concurrent refreshes by JWT id — one network hop.
+<span class="add">+   user = await refreshInflight.getOrCreate(user.jti, async () =&gt; {</span>
+<span class="add">+     await refresh(token)</span>
+<span class="add">+     return session(token)</span>
+<span class="add">+   })</span>
+    if (!user) {
+<span class="add">+     throw new AppError(401, "session expired")</span>
+    }
+  }
+
+  if (user.revoked) {
+<span class="add">+   throw new AppError(401, "token revoked")</span>
+  }
+
+  req.user = user
+  metrics.inc("auth.ok")
+  return next()
+}
+
+export async function optionalAuth(
+  req: Request,
+  _res: Response,
+  next: NextFunction,
+) {
+  const header = req.headers.authorization
+  if (!header?.startsWith("Bearer ")) return next()
+  try {
+    const token = header.slice(7)
+    req.user = await session(token)
+  } catch (err) {
+<span class="add">+   if (!(err instanceof AppError)) throw err</span>
+<span class="add">+   // optional: ignore only auth failures, surface unexpected errors</span>
+  }
+  return next()
+}</pre>
               </div>
               <div class="fs-confirm-bar">
                 <p data-fs-status>Edit plan ready · <strong>Accept</strong> applies, <strong>Undo</strong> reverts</p>
@@ -322,7 +452,6 @@
           </div>
           <div class="fs-dock" data-fs-dock hidden></div>
         </div>
-        <div class="fs-toast" data-fs-toast></div>
       </div>
     </div>
   </section>
